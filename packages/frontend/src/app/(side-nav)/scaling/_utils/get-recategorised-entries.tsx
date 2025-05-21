@@ -22,13 +22,20 @@ export function getRecategorisedEntries<T extends CommonScalingEntry>(
     ...entries.others,
   ].sort(sortFn)
 
+  const isUnderReviewTemplate = (e: T) =>
+    e.statuses?.reviewStatus === 'initialReview'
+
+  const [rollupsUnderReview, visibleRollups] = partition(rollups, isUnderReviewTemplate)
+  const [validiumsUnderReview, visibleValidiums] = partition(
+    validiumsAndOptimiums,
+    isUnderReviewTemplate,
+  )
+  const [othersUnderReview, visibleOthers] = partition(others, isUnderReviewTemplate)
+
   return {
-    rollups: rollups.filter(
-      (entry) => entry.statuses?.underReview !== 'config',
-    ),
-    validiumsAndOptimiums: validiumsAndOptimiums.filter(
-      (entry) => entry.statuses?.underReview !== 'config',
-    ),
-    others: others.filter((entry) => entry.statuses?.underReview !== 'config'),
+    rollups: visibleRollups,
+    validiumsAndOptimiums: visibleValidiums,
+    others: visibleOthers,
+    underReview: [...rollupsUnderReview, ...validiumsUnderReview, ...othersUnderReview].sort(sortFn),
   }
 }

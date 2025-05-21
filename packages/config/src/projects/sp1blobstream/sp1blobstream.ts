@@ -20,7 +20,6 @@ export const sp1blobstream: BaseProject = {
     yellowWarning: undefined,
     redWarning: undefined,
     emergencyWarning: undefined,
-    isUnderReview: false,
     isUnverified: false,
   },
   display: {

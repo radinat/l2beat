@@ -56,8 +56,8 @@ export interface ScalingProject {
   archivedAt?: UnixTime
   /** Is this project an upcoming rollup? */
   isUpcoming?: boolean
-  /** Has this project changed and is under review? */
-  isUnderReview?: boolean
+  /** Review status of this project */
+  reviewStatus?: 'initialReview' | 'inReview' | 'reviewed'
   /** Colors used in the project's branding. E.g. ecosystem gradient, project page accents */
   colors?: ProjectColors
   /** Information displayed about the project on the frontend */
@@ -244,7 +244,7 @@ export interface Bridge {
   addedAt: UnixTime
   archivedAt?: UnixTime
   isUpcoming?: boolean
-  isUnderReview?: boolean
+  reviewStatus?: 'initialReview' | 'inReview' | 'reviewed'
   display: BridgeDisplay
   config: BridgeConfig
   chainConfig?: ChainConfig

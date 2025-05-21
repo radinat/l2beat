@@ -13,6 +13,7 @@ import {
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { OtherMigrationTabNotice } from '~/components/countdowns/other-migration/other-migration-tab-notice'
 import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
+import { featureFlags } from '~/consts/feature-flags'
 import {
   OthersInfo,
   RollupsInfo,
@@ -38,6 +39,7 @@ export function ScalingTvsTabs(props: Props) {
     rollups: props.rollups.filter(filterEntries),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
     others: props.others.filter(filterEntries),
+    underReview: [],
   }
 
   const entries = checked
@@ -84,6 +86,11 @@ export function ScalingTvsTabs(props: Props) {
           <DirectoryTabsTrigger value="others">
             Others <CountBadge>{entries.others.length}</CountBadge>
           </DirectoryTabsTrigger>
+          {checked && featureFlags.othersMigrated() && entries.underReview.length > 0 && (
+            <DirectoryTabsTrigger value="underReview">
+              Under Review <CountBadge>{entries.underReview.length}</CountBadge>
+            </DirectoryTabsTrigger>
+          )}
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups" className="pt-4 sm:pt-3">
@@ -125,6 +132,13 @@ export function ScalingTvsTabs(props: Props) {
             />
           </DirectoryTabsContent>
         </TableSortingProvider>
+        {checked && featureFlags.othersMigrated() && entries.underReview.length > 0 && (
+          <TableSortingProvider initialSort={initialSort}>
+            <DirectoryTabsContent value="underReview" className="pt-5">
+              <ScalingTvsTable entries={entries.underReview} />
+            </DirectoryTabsContent>
+          </TableSortingProvider>
+        )}
       </DirectoryTabs>
     </>
   )

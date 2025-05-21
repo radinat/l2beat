@@ -1,17 +1,17 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 
 interface Params {
-  isUnderReview: boolean
+  reviewStatus: 'initialReview' | 'inReview' | 'reviewed' | undefined
   impactfulChange: boolean
 }
 
 export type UnderReviewStatus = 'config' | 'impactful-change' | undefined
 
 export function getUnderReviewStatus({
-  isUnderReview,
+  reviewStatus,
   impactfulChange,
 }: Params): UnderReviewStatus {
-  if (isUnderReview) {
+  if (reviewStatus === 'initialReview' || reviewStatus === 'inReview') {
     return 'config'
   }
 
