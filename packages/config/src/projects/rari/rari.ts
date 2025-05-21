@@ -48,7 +48,7 @@ export const rari: ScalingProject = orbitStackL3({
   },
   proofSystemInactive: proofsDisabled, // TEMPORARY overwrite while the proof system is disabled (OSPHostIO = 0x0)
   stateValidation: {
-    isUnderReview: true,
+    reviewStatus: 'inReview',
     categories: [],
   },
   // END temp overwrites

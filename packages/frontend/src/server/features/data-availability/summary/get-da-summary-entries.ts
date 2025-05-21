@@ -113,8 +113,14 @@ function getDaSummaryEntry(
       href: `/data-availability/projects/${layer.slug}/${b.slug}`,
       statuses: {
         verificationWarning: b.statuses.isUnverified,
+        reviewStatus:
+          b.statuses.reviewStatus ??
+          (b.statuses.isUnderReview ? 'inReview' : 'reviewed'),
         underReview:
-          layer.statuses.isUnderReview || b.statuses.isUnderReview
+          layer.statuses.reviewStatus === 'initialReview' ||
+          layer.statuses.reviewStatus === 'inReview' ||
+          b.statuses.reviewStatus === 'initialReview' ||
+          b.statuses.reviewStatus === 'inReview'
             ? 'config'
             : undefined,
       },

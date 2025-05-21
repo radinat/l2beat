@@ -20,7 +20,6 @@ export const worldcoinsemaphore: BaseProject = {
     yellowWarning: undefined,
     redWarning: undefined,
     emergencyWarning: undefined,
-    isUnderReview: false,
     isUnverified: false,
   },
   display: {

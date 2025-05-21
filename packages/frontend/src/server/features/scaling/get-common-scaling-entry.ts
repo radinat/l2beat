@@ -1,4 +1,4 @@
-import type { Project } from '@l2beat/config'
+import type { Project, ProjectStageName } from '@l2beat/config'
 import type { FilterableEntry } from '~/components/table/filters/filterable-value'
 import { getBadgeWithParams } from '~/utils/project/get-badge-with-params'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
@@ -12,6 +12,7 @@ export interface CommonScalingEntry
   tab: 'rollups' | 'validiumsAndOptimiums' | 'others'
   /** 0 - n/a, 1 - stage0, 2 - stage1&2, 3 - ethereum */
   stageOrder: number
+  stage: ProjectStageName
 }
 
 export function getCommonScalingEntry({
@@ -37,8 +38,13 @@ export function getCommonScalingEntry({
       yellowWarning: project.statuses.yellowWarning,
       redWarning: project.statuses.redWarning,
       verificationWarning: project.statuses.isUnverified,
+      reviewStatus:
+        project.statuses.reviewStatus ??
+        (project.statuses.isUnderReview ? 'inReview' : 'reviewed'),
       underReview: getUnderReviewStatus({
-        isUnderReview: project.statuses.isUnderReview,
+        reviewStatus:
+          project.statuses.reviewStatus ??
+          (project.statuses.isUnderReview ? 'inReview' : 'reviewed'),
         impactfulChange: !!changes?.impactfulChange,
       }),
       syncWarning,
@@ -49,6 +55,7 @@ export function getCommonScalingEntry({
     },
     tab: getScalingTab(project),
     stageOrder: getStageOrder(project.scalingInfo.stage),
+    stage: project.scalingInfo.stage,
     filterable: [
       { id: 'type', value: project.scalingInfo.type },
       {

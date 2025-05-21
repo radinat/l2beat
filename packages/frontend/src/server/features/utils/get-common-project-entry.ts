@@ -16,6 +16,7 @@ export interface CommonProjectEntry {
         redWarning?: string
         verificationWarning?: boolean
         underReview?: UnderReviewStatus
+        reviewStatus?: 'initialReview' | 'inReview' | 'reviewed'
         syncWarning?: string
         countdowns?: ProjectCountdownsWithContext
         emergencyWarning?: string

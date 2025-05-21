@@ -161,7 +161,9 @@ export async function getDaProjectEntry(
     kind: layer.daLayer.type,
     type: layer.daLayer.type,
     description: `${layer.display.description} ${selected?.display.description ?? ''}`,
-    isUnderReview: layer.statuses.isUnderReview,
+    isUnderReview:
+      (layer.statuses.reviewStatus ??
+        (layer.statuses.isUnderReview ? 'inReview' : 'reviewed')) !== 'reviewed',
     isUpcoming: layer.isUpcoming ?? false,
     selectedBridge: {
       name: selected?.daBridge.name ?? 'No DA Bridge',
@@ -284,7 +286,9 @@ export async function getEthereumDaProjectEntry(
     kind: layer.daLayer.type,
     type: layer.daLayer.type,
     description: `${layer.display.description} ${bridge.display.description}`,
-    isUnderReview: layer.statuses.isUnderReview,
+    isUnderReview:
+      (layer.statuses.reviewStatus ??
+        (layer.statuses.isUnderReview ? 'inReview' : 'reviewed')) !== 'reviewed',
     isUpcoming: false,
     header: {
       links: getProjectLinks(layer.display.links),

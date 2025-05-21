@@ -37,6 +37,7 @@ export function ScalingLivenessTables(props: Props) {
     rollups: props.rollups.filter(filterEntries),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
     others: props.others.filter(filterEntries),
+    underReview: [],
   }
 
   const entries = checked
